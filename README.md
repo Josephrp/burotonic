@@ -1,5 +1,9 @@
 # 🐙aiburo
 
+aiburo is a collection of agent teams that produce fine grained business intelligence and adaptive marketting products. 
+
+one-click deploy to cloud hosting , select a target , give instructions, follow the feedback to produce detailed sales strategies and consumer profiles on-the-fly.
+
 
 
 ## Getting started
