@@ -4,4 +4,6 @@ openai
 googlesearch-python
 beautifulsoup4
 python-dotenv
-Requests
+requests
+chromadb
+unstructured[all]
