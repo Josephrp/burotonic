@@ -1,3 +1,7 @@
 pyautogen
 langchain
 openai
+googlesearch-python
+beautifulsoup4
+python-dotenv
+Requests
