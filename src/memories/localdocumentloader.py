@@ -1,6 +1,9 @@
+./
+
+# add import statements
 # Load data/documents
 UnstructuredReader = download_loader('UnstructuredReader')
-dir_reader = SimpleDirectoryReader(r"./src/autogen/add_your_files_here", file_extractor={
+dir_reader = SimpleDirectoryReader(r"/add_your_files_here/", file_extractor={
     ".pdf": UnstructuredReader(),
     ".html": UnstructuredReader(),
     ".eml": UnstructuredReader(),
@@ -10,10 +13,10 @@ dir_reader = SimpleDirectoryReader(r"./src/autogen/add_your_files_here", file_ex
 documents = dir_reader.load_data()
 
 # Create vector store/embeddings
-db = chromadb.PersistentClient(path=r"./src/autogen/vector_store")
+db = chromadb.PersistentClient(path=r"./src/vector_store")
 chroma_client = chromadb.EphemeralClient()
 chroma_collection = chroma_client.create_collection("collection_name")
-embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5") #TruEra Evaluation
+embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5")
 
 # Extracting metadata and creating nodes
 text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
@@ -32,6 +35,7 @@ def query_vector_db(query_texts: List[str], n_results: int = 10, search_string: 
     # Custom query logic goes here...
     return result_dict
 
+# move below to agentics (?)
 class MyRetrieveUserProxyAgent(RetrieveUserProxyAgent):
     def query_vector_db(self, query_texts: List[str], n_results: int = 10, search_string: str = "", **kwargs) -> Dict[str, List[List[Any]]]:
         return query_vector_db(query_texts, n_results, search_string, **kwargs)
