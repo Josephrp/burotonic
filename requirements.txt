@@ -5,3 +5,5 @@ googlesearch-python
 beautifulsoup4
 python-dotenv
 Requests
+chromadb
+unstructured[all]

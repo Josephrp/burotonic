@@ -28,8 +28,6 @@ class AgentsFactory:
         self.llm_config = llm_config
         self.db_path = db_path
 
-    
-
     def tonic(self) :
         return autogen.UserProxyAgent(
             name="Boss",
