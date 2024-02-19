@@ -7,7 +7,7 @@ from googlesearch import search
 from bs4 import BeautifulSoup
 
 class WebScraper:
-    def __init__(self, query, num_results=10, output_folder="website_data"):
+    def __init__(self, query, num_results=10, output_folder="./website_data"):
         self.query = query
         self.num_results = num_results
         self.output_folder = output_folder

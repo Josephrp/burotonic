@@ -26,7 +26,7 @@ class WebVectorStore:
         """Scrape web pages and save the content to files."""
         self.scraper.run()
 
-    def load_data(self):
+    def load_data(self):   # replace with unstructured file loader ?
         """Load scraped data from files."""
         for filename in os.listdir(self.output_folder):
             with open(os.path.join(self.output_folder, filename), 'r', encoding='utf-8') as file:
@@ -38,8 +38,6 @@ class WebVectorStore:
         self.db = chromadb.PersistentClient(path=self.vector_store_path)
         chroma_client = chromadb.EphemeralClient()
         self.chroma_collection = chroma_client.create_collection(self.collection_name)
-        
-        # Assuming you want to use a more advanced model than the placeholder in the initial code
         embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")  # move this to open ai embeddings
         
         text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
