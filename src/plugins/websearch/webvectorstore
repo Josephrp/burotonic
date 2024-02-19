@@ -1,0 +1,66 @@
+import os
+from typing import List, Dict, Any
+import chromadb
+import unstructured
+from chromadb.vector_store import ChromaVectorStore
+from chromadb.index import VectorStoreIndex
+from chromadb.storage import StorageContext
+from chromadb.service import ServiceContext, SimpleNodeParser, MetadataExtractor, TokenTextSplitter
+from chromadb.extractors import TitleExtractor, QuestionsAnsweredExtractor
+from chromadb.embeddings import HuggingFaceEmbedding
+from src.plugins.websearch.search import WebScraper
+
+class WebVectorStore:
+    def __init__(self, query, num_results=10, output_folder="./website_data", vector_store_path="./src/vector_store", collection_name="web_collection"):
+        self.query = query
+        self.num_results = num_results
+        self.output_folder = output_folder
+        self.vector_store_path = vector_store_path
+        self.collection_name = collection_name
+        self.scraper = WebScraper(query, num_results, output_folder)
+        self.db = None
+        self.chroma_collection = None
+        self.vector_store = None
+        self.documents = []
+
+    def scrape_and_save(self):
+        """Scrape web pages and save the content to files."""
+        self.scraper.run()
+
+    def load_data(self):   # replace with unstructured file loader ?
+        """Load scraped data from files."""
+        UnstructuredReader = download_loader('UnstructuredReader')
+        dir_reader = SimpleDirectoryReader(output_folder, file_extractor={".txt": UnstructuredReader()}, recursive=True)
+        self.documents = dir_reader.load_data()
+
+# Create vector store/embeddings
+db = chromadb.PersistentClient(path=r"./src/vector_store")
+
+    def setup_vector_store(self):
+        """Set up the vector store and index the documents."""
+        self.db = chromadb.PersistentClient(path=self.vector_store_path)
+        chroma_client = chromadb.EphemeralClient()
+        self.chroma_collection = chroma_client.create_collection(self.collection_name)
+        embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")  # move this to open ai embeddings
+        
+        text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
+        metadata_extractor = MetadataExtractor(extractors=[TitleExtractor(nodes=5), QuestionsAnsweredExtractor(questions=3)])
+        node_parser = SimpleNodeParser.from_defaults(text_splitter=text_splitter)
+        
+        vector_store = ChromaVectorStore(chroma_collection=self.chroma_collection)
+        storage_context = StorageContext.from_defaults(vector_store=vector_store)
+        service_context = ServiceContext.from_defaults(embed_model=embed_model, node_parser=node_parser)
+        
+        index = VectorStoreIndex.from_documents(self.documents, storage_context=storage_context, service_context=service_context)
+        index.build()
+
+    # debug statements:
+    def setup(self):
+        """Run the complete process: scrape, load, setup vector store, and ready for querying."""
+        print("Starting web scraping...")
+        self.scrape_and_save()
+        print("Loading data...")
+        self.load_data()
+        print("Setting up vector store and indexing documents...")
+        self.setup_vector_store()
+        print("Setup complete. The agent is now ready to query.")
