@@ -1,5 +1,4 @@
 # ./src/team.py
-
 import openai
 
 class teammappers:
