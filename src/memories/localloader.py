@@ -1,4 +1,4 @@
-# ./src/memories/localdocumentloaader.py
+# ./src/memories/localloader.py
 
 # add import statements
 # Load data/documents
