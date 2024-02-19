@@ -1,3 +1,5 @@
+# ./src/plugins
+
 import os
 import requests
 from googlesearch import search
