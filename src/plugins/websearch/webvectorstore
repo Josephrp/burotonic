@@ -40,7 +40,7 @@ class WebVectorStore:
         self.chroma_collection = chroma_client.create_collection(self.collection_name)
         
         # Assuming you want to use a more advanced model than the placeholder in the initial code
-        embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")  # Example of a better performing model
+        embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")  # move this to open ai embeddings
         
         text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
         metadata_extractor = MetadataExtractor(extractors=[TitleExtractor(nodes=5), QuestionsAnsweredExtractor(questions=3)])
@@ -52,3 +52,14 @@ class WebVectorStore:
         
         index = VectorStoreIndex.from_documents(self.documents, storage_context=storage_context, service_context=service_context)
         index.build()
+
+    # debug statements:
+    def setup(self):
+        """Run the complete process: scrape, load, setup vector store, and ready for querying."""
+        print("Starting web scraping...")
+        self.scrape_and_save()
+        print("Loading data...")
+        self.load_data()
+        print("Setting up vector store and indexing documents...")
+        self.setup_vector_store()
+        print("Setup complete. The agent is now ready to query.")

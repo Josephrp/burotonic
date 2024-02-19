@@ -2,6 +2,7 @@
 
 import os
 import requests
+import googlesearch
 from googlesearch import search
 from bs4 import BeautifulSoup
 

@@ -16,7 +16,7 @@ documents = dir_reader.load_data()
 db = chromadb.PersistentClient(path=r"./src/vector_store")
 chroma_client = chromadb.EphemeralClient()
 chroma_collection = chroma_client.create_collection("collection_name")
-embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5")
+embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5") # move this to open ai embeddings
 
 # Extracting metadata and creating nodes
 text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
