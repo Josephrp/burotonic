@@ -36,7 +36,7 @@ def query_vector_db(query_texts: List[str], n_results: int = 10, search_string: 
     return result_dict
 
 # move below to agentics (?)
-class MyRetrieveUserProxyAgent(RetrieveUserProxyAgent):
+class LocalRetrieveUserProxyAgent(RetrieveUserProxyAgent):
     def query_vector_db(self, query_texts: List[str], n_results: int = 10, search_string: str = "", **kwargs) -> Dict[str, List[List[Any]]]:
         return query_vector_db(query_texts, n_results, search_string, **kwargs)
 
