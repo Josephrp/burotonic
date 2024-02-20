@@ -2,6 +2,7 @@
 
 from openai import OpenAI
 import json
+
 class AssistantRun:
     def __init__(self, assistant_id):
         self.client = OpenAI() 
@@ -71,7 +72,7 @@ class AssistantRun:
 # # Example usage
 # if __name__ == "__main__":
 #     assistant_id = "asst_UMcL08TCFXFAHiGnqU3j6ncH"
-#     agent = AgentBuilder(assistant_id)
+#     agent = assistantrun(assistant_id)
 #     user_message = "I need to solve the equation `3x + 11 = 14`. Can you help me?"
 #     instructions = "Please address the user as Jane Doe. The user has a premium account."
     
