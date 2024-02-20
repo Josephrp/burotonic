@@ -1,8 +1,7 @@
-# Import necessary libraries
-# Assuming the API client library is available and configured for authentication
-# This is a placeholder import, replace it with your actual client library import
-from openai import OpenAI
+# ./src/agentics/runassistant.py
 
+from openai import OpenAI
+import json
 class AssistantRun:
     def __init__(self, assistant_id):
         self.client = OpenAI() 
@@ -45,6 +44,15 @@ class AssistantRun:
             thread_id=thread_id
         )
         return messages
+    
+    def extract_assistant_message(response):
+        assistant_messages = []
+        for message in response.get('data', []):
+            if message.get('role') == 'assistant':
+                for content in message.get('content', []):
+                    if content.get('type') == 'text':
+                        assistant_messages.append(content['text']['value'])
+        return "\n".join(assistant_messages)
 
     def execute(self, user_message, instructions=None):
         """Execute the full flow: create thread, add message, run assistant, and get response."""
@@ -52,14 +60,13 @@ class AssistantRun:
         self.add_message_to_thread(thread.id, user_message)
         run = self.run_assistant(thread.id, instructions)
         
-        # Assuming the API or your client has a way to wait for or check the completion
-        # This might need to be replaced with a more appropriate method for your setup
         run_status = self.check_run_status(thread.id, run.id)
         while run_status.status != 'completed':
             run_status = self.check_run_status(thread.id, run.id)
         
         messages = self.get_messages(thread.id)
-        return messages
+        assistant_message = self.extract_assistant_message(messages)
+        return assistant_message
 
 # # Example usage
 # if __name__ == "__main__":
