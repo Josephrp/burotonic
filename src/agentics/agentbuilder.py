@@ -34,8 +34,10 @@ def build_agent_from_input(user_input):
     if assistant_response:
         assistant_id = assistant_response.get('id', None)
         print(f"Assistant ID: {assistant_id}")
+        return assistant_id
     else:
         print("Failed to create assistant.")
+    
 
 # if __name__ == "__main__":
 #     user_input = input("Please enter your query to build an agent: ")
