@@ -35,6 +35,11 @@ class AgentCreator:
             print(f"Failed to decode JSON: {e}")
             return None
 
+# example response 
+
+
+# {"id":"asst_5JUroVHGMb2uJgIYP9jtdS3D","object":"assistant","created_at":1708458950,"name":null,"description":null,"model":"gpt-4-turbo-preview","instructions":"You are a personal math tutor. When asked a math question, write and run code to answer the question.","tools":[{"type":"code_interpreter"}],"file_ids":[],"metadata":{}}
+
 # # Example usage
 # if __name__ == "__main__":
 #     # Replace 'your_api_key_here' with your actual OpenAI API key
