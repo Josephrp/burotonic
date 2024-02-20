@@ -32,7 +32,7 @@ llm_config = {
 def termination_msg(self, x):
         return isinstance(x, dict) and "TERMINATE" == str(x.get("content", ""))[-9:].upper()
 
-class AgentsFactory:
+class Agents:
     def __init__(self, llm_config, db_path):
         self.llm_config = llm_config
         self.db_path = db_path
@@ -177,6 +177,26 @@ director = GPTAssistantAgent(
     llm_config = {
         "config_list": config_list,
         "assistant_id": DIRECTOR_ASSISTANT_ID,
+    }
+)
+
+
+# Create director agent
+profiler = GPTAssistantAgent(
+    name = "profiler",
+    llm_config = {
+        "config_list": config_list,
+        "assistant_id": PROFILER_ASSISTANT_ID,
+    }
+)
+
+
+# Create director agent
+longcontent = GPTAssistantAgent(
+    name = "longcontentcreator",
+    llm_config = {
+        "config_list": config_list,
+        "assistant_id": LONGCONTENT_ASSISTANT_ID,
     }
 )
 
