@@ -4,6 +4,8 @@ from openai import OpenAI
 import json
 from src.agentics.runassistant import AssistantRun
 
+dotenv_path = os.path.join(os.path.dirname(__file__), 'src', 'config', 'assistants.env')
+load_dotenv(dotenv_path)
 class SystemPrompt:
     def __init__(self, improve_input_id, system_prompt_id):
         self.improve_input_agent = AssistantRun(improve_input_id)
