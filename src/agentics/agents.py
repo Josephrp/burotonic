@@ -1,7 +1,16 @@
+# ./src/agentics/agents.py
+
 import autogen
 from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 import chromadb
+
+
+# Load environment variables
+dotenv_path = os.path.join(os.path.dirname(__file__), 'src', 'promptburo', 'system_messages.env')
+load_dotenv(dotenv_path)
+dotenv_path = os.path.join(os.path.dirname(__file__), 'src', 'config', 'assistants.env')
+load_dotenv(dotenv_path)
 
 config_list = autogen.config_list_from_json(
     "OAI_CONFIG_LIST.json",
@@ -61,21 +70,21 @@ class AgentsFactory:
     def coder(self) : 
         return AssistantAgent(
             name="Coder",
-            system_message="You are a coder. Help in writing and reviewing code.",
+            system_message=os.getenv('CODER_MESSAGE'),
             llm_config=llm_config
         )
 
     def pm(self) :
         return AssistantAgent(
             name="Project_Manager",
-            system_message="You are a project manager. Coordinate tasks and ensure project success.",
+            system_message=os.getenv('PROJECT_MANAGER_MESSAGE'),
             llm_config=llm_config
         )
 
     def reviewer(self) :
         return AssistantAgent(
             name="Reviewer",
-            system_message="You are a code reviewer. Provide feedback on code quality.",
+            system_message=os.getenv('REVIEWER_MESSAGE'),
             llm_config=llm_config
         )
 
@@ -83,61 +92,91 @@ class AgentsFactory:
     def finance_expert(self) :
         return AssistantAgent(
             name="Finance_Expert",
-            system_message="You are a finance expert. Provide insights on financial matters.",
+            system_message=os.getenv('FINANCE_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
 
     def debate_champion(self) :
         return AssistantAgent(
             name="Debate_Champion",
-            system_message="You are a debate champion. Contribute to meaningful debates.",
+            system_message=os.getenv('DEBATE_CHAMPION_MESSAGE'),
             llm_config=llm_config
         )
 
     def academic_whiz(self) :
         return AssistantAgent(
         name="Academic_Whiz",
-        system_message="You are an academic whiz. Offer solutions to academic challenges.",
+        system_message=os.getenv('ACADEMIC_WHIZ_MESSAGE'),
         llm_config=llm_config
     )
 
     def consulting_pro(self) :
             return AssistantAgent(
             name="Consulting_Pro",
-            system_message="You are a consulting professional. Offer professional advice and solutions.",
+            system_message=os.getenv('CONSULTING_PRO_MESSAGE'),
             llm_config=llm_config
         )
     def covid19_scientist(self) : 
         return AssistantAgent(
             name="Covid19_Scientist",
-            system_message="You are a scientist studying Covid-19 trends. Provide analysis and insights.",
+            system_message=os.getenv('COVID19_SCIENTIST_MESSAGE'),
             llm_config=llm_config
         )
 
     def healthcare_expert(self) : 
         return AssistantAgent(
             name="Healthcare_Expert",
-            system_message="You are a healthcare expert focused on managing and mitigating the impact of Covid-19.",
+            system_message=os.getenv('HEALTHCARE_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
 
     def finance_analyst(self) :
         return AssistantAgent(
             name="Finance_Analyst",
-            system_message="You are a finance analyst. Provide insights on the economic impact of Covid-19.",
+            system_message=os.getenv('FINANCE_ANALYST_MESSAGE'),
             llm_config=llm_config
         )
 
     def debate_expert(self) :
         return AssistantAgent(
             name="Debate_Expert",
-            system_message="You are an expert in debate strategies and communication. Participate in meaningful debates.",
+            system_message=os.getenv('DEBATE_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
 
     def academic_expert(self) :
         return AssistantAgent(
             name="Academic_Expert",
-            system_message="You are an academic expert. Provide assistance and insights for academic challenges.",
+            system_message="os.getenv('ACADEMIC_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
+
+### Load Assistants
+
+# Create researcher agent
+researcher = GPTAssistantAgent(
+    name = "researcher",
+    llm_config = {
+        "config_list": config_list,
+        "assistant_id": RESEARCHER_ASSISTANT_ID
+    }
+)
+
+# Create research manager agent
+research_manager = GPTAssistantAgent(
+    name="research_manager",
+    llm_config = {
+        "config_list": config_list,
+        "assistant_id": RESEARCH_MANAGER_ASSISTANT_ID
+    }
+)
+
+# Create director agent
+director = GPTAssistantAgent(
+    name = "director",
+    llm_config = {
+        "config_list": config_list,
+        "assistant_id": DIRECTOR_ASSISTANT_ID,
+    }
+)
+
