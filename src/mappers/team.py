@@ -1,9 +1,19 @@
 # ./src/mappers/team.py
 
 import openai
-
+import json
+import os
 class teammappers:
     def __init__(self, api_key):
+        self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
+        self.config = load_config(config_path)
+        self.openai_keys = get_openai_keys(config)
+        if openai_keys:
+            self.api_key = openai_keys[0]
+    #       print(f"Using OpenAI key: {openai_key}")
+        else:
+            print("No OpenAI API keys found in the configuration.")
+
         self.client = openai.OpenAI(api_key=api_key)
 
     def get_completion(self, user_input, temperature=1, max_tokens=256, top_p=1, frequency_penalty=0, presence_penalty=0):
@@ -27,7 +37,15 @@ class teammappers:
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
-        return response
+        # Parse the response to extract the 'Team' part
+        try:
+            response_data = json.loads(response["choices"][0]["message"]["content"])
+            team_data = response_data.get("Team", {})
+            return {"Team": team_data}
+        except (KeyError, ValueError, TypeError):
+            # Handle possible parsing errors or missing keys
+            return {"error": "Failed to parse response or extract 'Team' data"}
+
 # Example Response
 # {
 #   "role": "assistant",
