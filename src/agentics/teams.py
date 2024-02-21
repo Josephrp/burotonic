@@ -5,7 +5,6 @@ from autogen import GroupChat, GroupChatManager
 from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
 from autogen.util import config_list_from_json
 from src.agentics.agentcreate import agentCreator
-import src.promptburo
 
 class TeamManager:
     def __init__(self, openai_key):
