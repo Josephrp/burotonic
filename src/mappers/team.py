@@ -3,7 +3,7 @@
 import openai
 import json
 import os
-class teammappers:
+class teamMappers:
     def __init__(self, api_key):
         self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
         self.config = load_config(config_path)
@@ -37,13 +37,11 @@ class teammappers:
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
-        # Parse the response to extract the 'Team' part
         try:
             response_data = json.loads(response["choices"][0]["message"]["content"])
             team_data = response_data.get("Team", {})
             return {"Team": team_data}
         except (KeyError, ValueError, TypeError):
-            # Handle possible parsing errors or missing keys
             return {"error": "Failed to parse response or extract 'Team' data"}
 
 # Example Response

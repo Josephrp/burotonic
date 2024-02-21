@@ -1,3 +1,5 @@
+# src/agentics/tools.py
+
 yfinance = {
     "name": "yfinance",
     "description": "Search for yahoo finance information using the yahoo finance API. Use the user's search query to fill the variable $query.",

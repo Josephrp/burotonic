@@ -1,8 +1,10 @@
+# ./src/agentics/agentcreate.py
+
 import openai
 import json
 import os
 
-class AgentCreator:
+class agentCreator:
     def __init__(self, api_key):
         self.api_key = api_key
         openai.api_key = self.api_key
