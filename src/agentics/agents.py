@@ -190,7 +190,6 @@ profiler = GPTAssistantAgent(
     }
 )
 
-
 # Create director agent
 longcontent = GPTAssistantAgent(
     name = "longcontentcreator",
@@ -199,4 +198,3 @@ longcontent = GPTAssistantAgent(
         "assistant_id": LONGCONTENT_ASSISTANT_ID,
     }
 )
-
