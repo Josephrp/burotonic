@@ -16,11 +16,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'config'))
 config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
 config = load_config(config_path)
 openai_keys = get_openai_keys(config)
-    if openai_keys:
-        openai_key = openai_keys[0]
+if openai_keys:
+    openai_key = openai_keys[0]
 #       print(f"Using OpenAI key: {openai_key}")
-    else:
-        print("No OpenAI API keys found in the configuration.")
+else:
+     print("No OpenAI API keys found in the configuration.")
 
 
 def build_agent_from_input(user_input):

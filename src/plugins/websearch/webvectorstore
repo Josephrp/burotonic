@@ -4,6 +4,7 @@ import os
 from typing import List, Dict, Any
 import chromadb
 import unstructured
+from langchain.embeddings import huggingface_hub
 from chromadb.vector_store import ChromaVectorStore
 from chromadb.index import VectorStoreIndex
 from chromadb.storage import StorageContext
@@ -12,6 +13,9 @@ from chromadb.extractors import TitleExtractor, QuestionsAnsweredExtractor
 from chromadb.embeddings import HuggingFaceEmbedding
 from src.plugins.websearch.search import WebScraper
 
+
+
+db = chromadb.PersistentClient(path=r"./src/vector_store")
 class WebVectorStore:
     def __init__(self, query, num_results=10, output_folder="./website_data", vector_store_path="./src/vector_store", collection_name="web_collection"):
         self.query = query
@@ -35,9 +39,9 @@ class WebVectorStore:
         dir_reader = SimpleDirectoryReader(output_folder, file_extractor={".txt": UnstructuredReader()}, recursive=True)
         self.documents = dir_reader.load_data()
 
-# Create vector store/embeddings
-db = chromadb.PersistentClient(path=r"./src/vector_store")
 
+
+    
     def setup_vector_store(self):
         """Set up the vector store and index the documents."""
         self.db = chromadb.PersistentClient(path=self.vector_store_path)

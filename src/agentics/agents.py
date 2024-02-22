@@ -1,9 +1,32 @@
 # ./src/agentics/agents.py
 
+from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
+from dotenv import load_dotenv
+import os
 import autogen
 from autogen import AssistantAgent
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 import chromadb
+from tools import yfinance
+
+# experiment
+import os
+import requests
+import googlesearch
+from googlesearch import search
+from bs4 import BeautifulSoup
+
+from langchain.agents import load_tools
+tools = load_tools(["google-serper"])
+
+# def fetch_urls(query,num_results):
+#     """Fetch URLs using Google search."""
+#     urls = search(query, num_results=num_results, sleep_interval=2)
+#     return urls
+# @user_proxy.register_for_execution()
+# @finance_expert.register_for_llm(name="fetch_urls", description="Fetch URLs using Google search.")
+# def call_fetch_urls(query: str, num_results: int) -> List[str]:
+#     return agents.fetch_urls(query, num_results)
 
 
 # Load environment variables
@@ -95,6 +118,20 @@ class Agents:
             system_message=os.getenv('FINANCE_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
+    def yfinance_expert(self) :
+        return AssistantAgent(
+            name="Finance_Expert",
+            system_message=os.getenv('FINANCE_EXPERT_MESSAGE'),
+            llm_config=llm_config,
+            tools=yfinance
+        )
+    def search(self) : 
+        return AssistantAgent(
+            name="Coder",
+            system_message=os.getenv('CODER_MESSAGE'),
+            llm_config=llm_config,
+            tools=load_tools(["google-serper"])
+        )
 
     def debate_champion(self) :
         return AssistantAgent(
@@ -147,7 +184,7 @@ class Agents:
     def academic_expert(self) :
         return AssistantAgent(
             name="Academic_Expert",
-            system_message="os.getenv('ACADEMIC_EXPERT_MESSAGE'),
+            system_message=os.getenv('ACADEMIC_EXPERT_MESSAGE'),
             llm_config=llm_config
         )
 

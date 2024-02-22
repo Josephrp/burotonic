@@ -1,5 +1,6 @@
 pyautogen
 langchain
+langchain-openai
 openai
 googlesearch-python
 beautifulsoup4

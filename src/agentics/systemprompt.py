@@ -1,8 +1,11 @@
 # File: ./src/agentics/systemprompt.py
+import os
 import openai
 from openai import OpenAI
 import json
 from src.agentics.runassistant import AssistantRun
+from dotenv import load_dotenv
+
 
 dotenv_path = os.path.join(os.path.dirname(__file__), 'src', 'config', 'assistants.env')
 load_dotenv(dotenv_path)

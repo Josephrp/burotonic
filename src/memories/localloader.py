@@ -2,6 +2,15 @@
 
 # add import statements
 # Load data/documents
+
+# why not reuse vector.py?
+import chromadb
+import os  #see chat
+import chromadb.utils.embedding_functions as embedding_functions
+from langchain.document_loaders import DirectoryLoader,TextLoader
+
+from langchain_openai import OpenAIEmbeddings
+# :-) ill explain you later 
 UnstructuredReader = download_loader('UnstructuredReader')
 dir_reader = SimpleDirectoryReader(r"/add_your_files_here/", file_extractor={
     ".pdf": UnstructuredReader(),
@@ -13,10 +22,12 @@ dir_reader = SimpleDirectoryReader(r"/add_your_files_here/", file_extractor={
 documents = dir_reader.load_data()
 
 # Create vector store/embeddings
-db = chromadb.PersistentClient(path=r"./src/vector_store")
+vector_store_directory = "./src/vector_store"
+os.makedirs(vector_store_directory, exist_ok=True)
+db = chromadb.PersistentClient(path=vector_store_directory) #create dir if dont exist ? okay 
 chroma_client = chromadb.EphemeralClient()
 chroma_collection = chroma_client.create_collection("collection_name")
-embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5") # move this to open ai embeddings
+embed_model = OpenAIEmbeddings(openai_api_key="...") # move this to open ai embeddings
 
 # Extracting metadata and creating nodes
 text_splitter = TokenTextSplitter(separator=" ", chunk_size=1024, chunk_overlap=128)
@@ -37,10 +48,10 @@ def query_vector_db(query_texts: List[str], n_results: int = 10, search_string: 
 
 # move below to agentics (?)
 class LocalRetrieveUserProxyAgent(RetrieveUserProxyAgent):
-    def query_vector_db(self, query_texts: List[str], n_results: int = 10, search_string: str = "", **kwargs) -> Dict[str, List[List[Any]]]:
+    def query_vector_db(self, query_texts: List[str], n_results: int = 5, search_string: str = "", **kwargs) -> Dict[str, List[List[Any]]]:
         return query_vector_db(query_texts, n_results, search_string, **kwargs)
 
-    def retrieve_docs(self, problem: str, n_results: int = 20, search_string: str = "", **kwargs):
+    def retrieve_docs(self, problem: str, n_results: int = 5, search_string: str = "", **kwargs):
         results = self.query_vector_db(query_texts=[problem], n_results=n_results, search_string=search_string, **kwargs)
         self._results = results
         print("doc_ids: ", results["ids"])

@@ -3,6 +3,7 @@
 import openai
 import json
 import os
+import tools
 
 class agentCreator:
     def __init__(self, api_key):
@@ -36,6 +37,8 @@ class agentCreator:
         except json.JSONDecodeError as e:
             print(f"Failed to decode JSON: {e}")
             return None
+# yt=agentCreator()
+# yt.create_assistant("fin","you are a finance expert",)
 
 # example response 
 
