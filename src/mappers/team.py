@@ -11,7 +11,7 @@ class TeamMappers:
         self.openai_keys = get_openai_keys(config)
         if openai_keys:
             self.api_key = openai_keys[0]
-          print(f"Using OpenAI key: {openai_key}")
+            print(f"Using OpenAI key: {openai_key}")
         else:
             print("No OpenAI API keys found in the configuration.")
         self.config= {"model": "gpt-3.5-turbo-preview","api_key"}
