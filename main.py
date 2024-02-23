@@ -3,9 +3,9 @@ import sys
 from dotenv import load_dotenv
 import autogen
 from autogen.util import load_config, get_openai_keys, config_list_from_json
-from src.mappers.team import teamMappers
+from src.mappers.team import TeamMappers
 from src.agentics.teams import TeamManager 
-
+from src.agentics.runassistant import AssistantRun 
 # Append the config directory to sys.path for importing config functionalities
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src', 'config'))
 
@@ -36,7 +36,7 @@ def route_user_input(user_input):
     openai_key, config_list = load_openai_keys_and_config()
     
     # Initialize the TeamMapper with the OpenAI API key
-    team_mapper = teamMappers(openai_key)
+    team_mapper = TeamMappers(openai_key)
     
     # Preprocess the user input with an assistant specified in assistants.env
     # ASSISTANT_NAME is assumed to be the environmental variable specifying which assistant to use for input preprocessing
@@ -56,10 +56,10 @@ def route_user_input(user_input):
         # Manage teams and interactions based on the mapped team
         team_manager.manage_teams(team, improved_input)
 
-def main():
-    # Example user input
-    user_input = "I need help understanding Autogen library."
-    route_user_input(user_input)
+# def main():
+#     # Example user input
+#     user_input = "I need help understanding Autogen library."
+#     route_user_input(user_input)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

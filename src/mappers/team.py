@@ -3,7 +3,7 @@ import re
 import openai
 import json
 import os
-from src.agentics.agentbuilder import build_agent_from_input
+import src.agentics.agentbuilder
 class TeamMappers:
     def __init__(self, api_key):
         self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
