@@ -3,7 +3,7 @@ import re
 import openai
 import json
 import os
-from src.agentics.agentbuilder import build_agent_from_input
+from src.agentics.agentbuilder
 class TeamMappers:
     def __init__(self, api_key):
         self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
@@ -53,7 +53,7 @@ class TeamMappers:
             print("it works")
             true_team = matches.group(1)
             print(true_team)
-            return true_team
+            return true_agent
             # json_content = response.choices[0].message.content
             # print(json_content["Team"])
             # data = json.loads(json_content)

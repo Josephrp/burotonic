@@ -1,3 +1,4 @@
+#./src/pugins/websearch/vector.py
 import chromadb
 from langchain.document_loaders import DirectoryLoader,TextLoader
 #from src.plugins.websearch.search import WebScraper

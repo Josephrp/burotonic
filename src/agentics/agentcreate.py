@@ -10,7 +10,7 @@ class agentCreator:
         self.api_key = api_key
         openai.api_key = self.api_key
 
-    def create_assistant(self, name, instructions, model, tools):
+    def create_assistant(self, name = "Tonic", instructions, model, tools = ):
         """
         Create an assistant with the specified parameters.
         """

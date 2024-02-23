@@ -35,13 +35,13 @@ def build_agent_from_input(user_input):
     
     # Initialize AgentCreator with API key from environment variables or hardcoded value
     # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "your_api_key_here")
-    agent_creator = AgentCreator(api_key=openai_key)
+    agent_creator = AgentCreator(api_key=openai_key, )
     
     # Use the processed output as instructions to create a new assistant
     assistant_response = agent_creator.create_assistant(
         name="Generated Assistant",
         instructions=processed_output,
-        tools=[{"type": "code_interpreter"}],  # Adjust tools as needed
+        tools=[{"type": "code_interpreter"},{"type":"retrieval"}],  # Adjust tools as needed
         model="gpt-4-turbo-preview"  # Adjust model as needed
     )
     
@@ -57,4 +57,4 @@ def build_agent_from_input(user_input):
 # if __name__ == "__main__":
 #     user_input = input("Please enter your query to build an agent: ")
 #     build_agent_from_input(user_input)
-build_agent_from_input("create an prompt for agent creation for an agent capable of teaching about french revolution")
+# build_agent_from_input("create an prompt for agent creation for an agent capable of teaching about french revolution")

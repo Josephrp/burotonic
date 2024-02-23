@@ -1,4 +1,4 @@
-# ./src/plugins
+#./src/pugins/websearch/search.py
 
 import os
 import requests
