@@ -3,14 +3,13 @@
 import openai
 import json
 import os
-import tools
 
 class agentCreator:
     def __init__(self, api_key):
         self.api_key = api_key
         openai.api_key = self.api_key
 
-    def create_assistant(self, name = "Tonic", instructions, model, tools = ):
+    def create_assistant(self, instructions, model, tools, name = "Tonic"):
         """
         Create an assistant with the specified parameters.
         """

@@ -3,7 +3,8 @@ import re
 import openai
 import json
 import os
-from autogen import load_config
+import autogen
+
 class TeamMappers:
     def __init__(self, api_key):
         self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')

@@ -19,7 +19,7 @@ class TeamManager:
         load_dotenv(dotenv_path_teams)
         
         self.agent_creator = agentCreator(openai_key)
-        self.config_list = config_list_from_json(os.path.join(os.getcwd(), '..', 'config', 'OAI_CONFIG_LIST_sample.json'))
+        self.config_list = config_list_from_json(os.path.join(os.getcwd(), '..', 'config', 'OAI_CONFIG.json'))
 
         self.team_agents = self._load_teams_config()
 
