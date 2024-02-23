@@ -16,8 +16,7 @@ load_dotenv(dotenv_assistants_env_path)
 
 def load_openai_keys_and_config():
     # Load OpenAI API key from config
-    config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
-    config = load_config(config_path)
+    config = load_config("src/config/OAI_CONFIG.json")
     openai_keys = get_openai_keys(config)
     
     if openai_keys:
@@ -26,7 +25,7 @@ def load_openai_keys_and_config():
         raise ValueError("No OpenAI API keys found in the configuration.")
     
     # Load configuration list for Autogen
-    config_list = config_list_from_json(os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG_LIST_sample.json'))
+    config_list = config_list_from_json("src/config/OAI_CONFIG.json")
     
     return openai_key, config_list
 
