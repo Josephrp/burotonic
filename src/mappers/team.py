@@ -3,6 +3,7 @@ import re
 import openai
 import json
 import os
+from autogen import load_config
 class TeamMappers:
     def __init__(self, api_key):
         self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
@@ -13,7 +14,7 @@ class TeamMappers:
             print(f"Using OpenAI key: {openai_key}")
         else:
             print("No OpenAI API keys found in the configuration.")
-        self.config= {"model": "gpt-3.5-turbo-preview", api_key}
+        self.config= {"model": "gpt-3.5-turbo-preview", "openai_key" : openai_keys[0]}
 
         self.client = openai.OpenAI(api_key=api_key)
 
