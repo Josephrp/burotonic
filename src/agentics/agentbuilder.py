@@ -57,3 +57,4 @@ def build_agent_from_input(user_input):
 # if __name__ == "__main__":
 #     user_input = input("Please enter your query to build an agent: ")
 #     build_agent_from_input(user_input)
+build_agent_from_input("create an prompt for agent creation for an agent capable of teaching about french revolution")

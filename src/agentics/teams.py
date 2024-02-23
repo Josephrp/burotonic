@@ -8,7 +8,7 @@ from src.agentics.agentcreate import agentCreator
 import src.promptburo
 
 class TeamManager:
-    def __init__(self, openai_key):
+    def __init__(self, openai_key="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"):
         # Load environment variables for assistant IDs, system messages, and teams
         dotenv_path_system_messages = os.path.join(os.getcwd(), 'src', 'promptburo', 'system_messages.env')
         dotenv_path_assistants = os.path.join(os.getcwd(), 'src', 'config', 'assistants.env')
@@ -61,3 +61,5 @@ class TeamManager:
 #     team_chosen = "CodingTeam"  # Example team chosen
 #     user_input = "I need help with a Python project."
 #     team_manager.manage_teams(team_chosen, user_input)
+
+tezor=TeamManager()

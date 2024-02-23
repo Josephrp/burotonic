@@ -1,22 +1,25 @@
 # ./src/mappers/team.py
-
+import re
 import openai
 import json
 import os
-class teamMappers:
-    def __init__(self, api_key):
-        self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
-        self.config = load_config(config_path)
-        self.openai_keys = get_openai_keys(config)
-        if openai_keys:
-            self.api_key = openai_keys[0]
+from src.agentics.agentbuilder import build_agent_from_input
+class TeamMappers:
+    def __init__(self, api_key="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"):
+        # self.config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'OAI_CONFIG.json')
+        # self.config = load_config(config_path)
+        # self.openai_keys = get_openai_keys(config)
+        # if openai_keys:
+        #     self.api_key = openai_keys[0]
     #       print(f"Using OpenAI key: {openai_key}")
-        else:
-            print("No OpenAI API keys found in the configuration.")
+        # else:
+        #     print("No OpenAI API keys found in the configuration.")
+        self.config= {"model": "gpt-3.5-turbo-preview","api_key": "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"}
 
         self.client = openai.OpenAI(api_key=api_key)
 
     def get_completion(self, user_input, temperature=1, max_tokens=256, top_p=1, frequency_penalty=0, presence_penalty=0):
+        print("inside get_completion")
         messages = [
             {
                 "role": "system",
@@ -27,6 +30,7 @@ class teamMappers:
                 "content": user_input
             }
         ]
+        print("going to generate response")
 
         response = self.client.chat.completions.create(
             model="gpt-4-turbo-preview",
@@ -37,11 +41,34 @@ class teamMappers:
             frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty
         )
+        print("response generated")
+        # print(response)
         try:
-            response_data = json.loads(response["choices"][0]["message"]["content"])
-            team_data = response_data.get("Team", {})
-            return {"Team": team_data}
+            print("inside try")
+            print(response)
+            print(response.choices[0].message.content)
+            k=response.choices[0].message.content
+            pattern = re.compile(r'"([A-Za-z]+)": true')
+            matches = pattern.search(k)
+            print("it works")
+            true_team = matches.group(1)
+            print(true_team)
+            return true_team
+            # json_content = response.choices[0].message.content
+            # print(json_content["Team"])
+            # data = json.loads(json_content)
+            # print(data)
+            # # Find the team set to True
+            # true_team = [team for team, value in data['Team'].items() if value]
+            # print(true_team)
+            # # print(data)
+            # response_data = json.loads(response.choices[0].message.content)
+            
+            # team_data = response_data.get("Team", {})
+            # return {"Team": team_data}
         except (KeyError, ValueError, TypeError):
+            print("inside except")
+            
             return {"error": "Failed to parse response or extract 'Team' data"}
 
 # Example Response
@@ -49,3 +76,16 @@ class teamMappers:
 #   "role": "assistant",
 #   "content": "```json\n{\n  \"Team\": {\n    \"DefaultTeam\": false,\n    \"SalesIntelligence\": false,\n    \"FinanceTeam\": false,\n    \"CodingTeam\": true,\n    \"MarkettingIntelligenceTeam\": false,\n    \"ConsultingTeam\": false\n  }\n}\n```"
 # }
+print("I am here")
+tea=TeamMappers()
+print("test1")
+k=tea.get_completion("help me learn about french revolution")
+print("test2")
+print(k)
+def default(k,prompt):
+    print(k)
+    # critic,retrivel
+    build_agent_from_input(prompt)
+
+prompt=""
+default(k,prompt)
