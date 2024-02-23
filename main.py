@@ -41,7 +41,7 @@ def route_user_input(user_input):
     # Preprocess the user input with an assistant specified in assistants.env
     # ASSISTANT_NAME is assumed to be the environmental variable specifying which assistant to use for input preprocessing
     assistant_name = os.getenv('ASSISTANT_NAME', 'IMPROVEINPUT')  # Fallback to 'IMPROVEINPUT' if not set
-    improved_input = RunAssistant.run(assistant_name, user_input, openai_key)
+    improved_input = AssistantRun.run(assistant_name, user_input, openai_key)
     
     # Map the improved user input to a specific team
     team = team_mapper.map_team(improved_input)
@@ -53,7 +53,6 @@ def route_user_input(user_input):
         pass
     else:
         team_manager = TeamManager(openai_key)
-        # Manage teams and interactions based on the mapped team
         team_manager.manage_teams(team, improved_input)
 
 # def main():
