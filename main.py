@@ -40,7 +40,7 @@ def route_user_input(user_input):
     
     # Preprocess the user input with an assistant specified in assistants.env
     # ASSISTANT_NAME is assumed to be the environmental variable specifying which assistant to use for input preprocessing
-    assistant_name = os.getenv('ASSISTANT_NAME', 'IMPROVEINPUT')  # Fallback to 'IMPROVEINPUT' if not set
+    assistant_name = os.getenv('IMPROVEINPUT')  # Fallback to 'IMPROVEINPUT' if not set
     improved_input = AssistantRun.run(assistant_name, user_input, openai_key)
     
     # Map the improved user input to a specific team
