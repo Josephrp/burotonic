@@ -1,4 +1,4 @@
-pyautogen
+ag2
 langchain
 langchain-openai
 openai
